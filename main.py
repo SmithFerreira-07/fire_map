@@ -32,9 +32,6 @@ REGIONS = {
     "Antarctica": {"lat_min": -90, "lat_max": -60, "lon_min": -180, "lon_max": 180},
 }
 
-
-
-@st.cache_data(ttl=3600)
 def fetch_data(days):
     end_date = datetime.now().date().strftime("%Y-%m-%d")
     url = f"https://firms.modaps.eosdis.nasa.gov/api/area/csv/{api_key}/VIIRS_SNPP_NRT/world/{days}/{end_date}"
