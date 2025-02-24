@@ -4,10 +4,8 @@ import pydeck as pdk
 import requests
 import io
 from dotenv import load_dotenv
-import os
 
-load_dotenv()
-api_key = os.getenv("FIRMS_API_KEY")
+api_key = st.secrets["FIRMS_API_KEY"]
 
 st.set_page_config(page_title="Global Fire Hotspots", layout="wide")
 
