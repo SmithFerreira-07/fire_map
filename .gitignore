@@ -1,0 +1,15 @@
+
+venv/
+myenv/  # If your virtual environment has a custom name
+
+
+.env
+
+
+__pycache__/
+*.pyc
+*.pyo
+
+
+.vscode/
+.idea/
