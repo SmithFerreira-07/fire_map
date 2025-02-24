@@ -3,7 +3,6 @@ import pandas as pd
 import pydeck as pdk
 import requests
 import io
-from dotenv import load_dotenv
 
 api_key = st.secrets["FIRMS_API_KEY"]
 
