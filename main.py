@@ -32,6 +32,7 @@ REGIONS = {
     "Antarctica": {"lat_min": -90, "lat_max": -60, "lon_min": -180, "lon_max": 180},
 }
 
+#TODO needs to work with cache data, so it doesn't need to fetch everytime
 def fetch_data(days):
     url = f"https://firms.modaps.eosdis.nasa.gov/api/area/csv/{api_key}/VIIRS_SNPP_NRT/world/{days}"
     try:
