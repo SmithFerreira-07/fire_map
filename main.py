@@ -32,8 +32,8 @@ REGIONS = {
     "Antarctica": {"lat_min": -90, "lat_max": -60, "lon_min": -180, "lon_max": 180},
 }
 
-def fetch_data(day_span):
-    url = f"https://firms.modaps.eosdis.nasa.gov/api/area/csv/{api_key}/VIIRS_SNPP_NRT/world/{day_span}"
+def fetch_data(days):
+    url = f"https://firms.modaps.eosdis.nasa.gov/api/area/csv/{api_key}/VIIRS_SNPP_NRT/world/{days}"
     try:
         response = requests.get(url)
         if response.status_code == 200:
@@ -86,7 +86,7 @@ def calculate_map_view(data):
 st.title("Global Fire Hotspots Map")
 
 
-day_span = st.slider("Select number of days to display", 1, 10, 1)
+day_span = st.slider("Select number of days to display", 2, 10, 2)
 
 with st.spinner(f"Fetching fire data for the past {day_span} day(s)..."):
     fire_data, error = fetch_data(day_span)
