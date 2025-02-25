@@ -1,7 +1,7 @@
 
 venv/
-myenv/  # If your virtual environment has a custom name
 secrets.toml
+config.toml
 
 .env
 
