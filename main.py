@@ -32,10 +32,8 @@ REGIONS = {
     "Antarctica": {"lat_min": -90, "lat_max": -60, "lon_min": -180, "lon_max": 180},
 }
 
-def fetch_data(days):
-    end_date = datetime.now().date().strftime("%Y-%m-%d")
-    url = f"https://firms.modaps.eosdis.nasa.gov/api/area/csv/{api_key}/VIIRS_SNPP_NRT/world/{days}/{end_date}"
-    
+def fetch_data(day_span):
+    url = f"https://firms.modaps.eosdis.nasa.gov/api/area/csv/{api_key}/VIIRS_SNPP_NRT/world/{day_span}"
     try:
         response = requests.get(url)
         if response.status_code == 200:
@@ -47,16 +45,7 @@ def fetch_data(days):
             if not all(col in df.columns for col in required_cols):
                 return None, "API response doesn't contain required location data."
             
-        
-            if 'bright_ti4' in df.columns:
-                df = df.rename(columns={'bright_ti4': 'brightness'})
-            elif 'bright_ti5' in df.columns:
-                df = df.rename(columns={'bright_ti5': 'brightness'})
-            else:
-                df['brightness'] = 0  
-                st.warning("Brightness data not found in API response. Using default values.")
-            
-            
+            df['brightness'] = df.get('bright_ti4', df.get('bright_ti5', 0))
             df['region'] = df.apply(classify_region, axis=1)
             return df, None
         else:
@@ -109,7 +98,6 @@ else:
     col1, col2, col3, col4 = st.columns(4)
     col1.metric("Total Hotspots", f"{len(fire_data):,}")
     col2.metric("Average Brightness", f"{fire_data['brightness'].mean():.1f}K")
-    col3.metric("Regions Affected", f"{fire_data['region'].nunique()}")
     region_counts = fire_data['region'].value_counts()
     top_region = region_counts.index[0] if not region_counts.empty else "None"
     top_region_pct = 100 * region_counts.iloc[0] / len(fire_data) if not region_counts.empty else 0
